@@ -1,0 +1,7 @@
+version: "1.0.0"
+description: "Station-mode WiFi manager for ESP32. Handles auto-reconnect, event-based connection, and IP assignment."
+url: "https://github.com/your-username/esp32-wifi-component"
+targets: [esp32, esp32s2, esp32s3, esp32c3]
+
+dependencies:
+  idf: ">=5.0.0"
