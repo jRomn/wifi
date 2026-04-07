@@ -1,6 +1,6 @@
 version: "1.0.0"
-description: "Station-mode WiFi manager for ESP32. Handles auto-reconnect, event-based connection, and IP assignment."
-url: "https://github.com/your-username/esp32-wifi-component"
+description: "WiFi Station manager for ESP32: handles connection, NVS initialization, and events."
+url: "https://github.com/jRomn/wifi"
 targets: [esp32, esp32s2, esp32s3, esp32c3]
 
 dependencies:
