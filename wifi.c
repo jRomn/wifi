@@ -17,6 +17,12 @@
     #include "freertos/event_groups.h"
 
 // =============================
+// Application Log Tag
+// =============================
+   
+    static const char *TAG = "WIFI";   // ESP_LOGI (Info)
+
+// =============================
 // WiFi Configuration (Exposed for wifi.c)
 // =============================
 /* EventGroup bits used to signal connection outcome to the blocking caller. */
@@ -41,16 +47,16 @@ static void event_handler(void *arg, esp_event_base_t event_base,
         if (s_retry_count < CONFIG_WIFI_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_count++;
-            ESP_LOGW(WIFI_TAG, "Retrying connection (%d/%d)...",
+            ESP_LOGW(TAG, "Retrying connection (%d/%d)...",
                      s_retry_count, CONFIG_WIFI_MAXIMUM_RETRY);
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
-            ESP_LOGE(WIFI_TAG, "Connection failed after %d retries.", CONFIG_WIFI_MAXIMUM_RETRY);
+            ESP_LOGE(TAG, "Connection failed after %d retries.", CONFIG_WIFI_MAXIMUM_RETRY);
         }
 
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
-        ESP_LOGI(WIFI_TAG, "Connected. IP address: " IPSTR, IP2STR(&event->ip_info.ip));
+        ESP_LOGI(TAG, "Connected. IP address: " IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_count = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
@@ -68,7 +74,7 @@ static void event_handler(void *arg, esp_event_base_t event_base,
     // =============================
     // Function to initialize the WiFi unit, configure the channel, and set up calibration.
     // Returns a handle to the initialized WiFi unit.
-    esp_err_t wifi_init_sta(void){
+    esp_err_t wifi_init_start(void){
         
         /* ---> PRE-STEP : Non-Volatile Storage ( NVS ) setup for Radio Calibration & Credentials */
         esp_err_t ret = nvs_flash_init();
@@ -156,4 +162,6 @@ static void event_handler(void *arg, esp_event_base_t event_base,
         }
 
         return ESP_FAIL;          // Connection failed
+
     }
+

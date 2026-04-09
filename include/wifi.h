@@ -16,14 +16,15 @@
 // Header Files 
 // =============================
 
+    /* --- General --- */
     #include "esp_err.h"
 
 // =============================
 // Application Log Tag
 // =============================
    
-    #define WIFI_TAG "WiFi"   // ESP_LOGI (Info)
-
+    #define WiFi_TAG "WiFi"   // ESP_LOGI (Info)
+    
 // =============================
 // Main Functions:
 // =============================
@@ -44,4 +45,5 @@
     */
 
     /* ---> STEP 3.0 : Initialize WiFi Station -> wifi.c */
-    esp_err_t wifi_init_sta(void);
+    esp_err_t wifi_init_start(void);
+
